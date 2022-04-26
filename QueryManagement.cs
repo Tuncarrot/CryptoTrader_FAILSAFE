@@ -13,6 +13,16 @@ namespace DogeHODLTrader
 
         }
 
+        public string GetApiHealth()
+        {
+            return "health-check";
+        }
+
+        public string GetPrices(string list)
+        {
+            return Constants.LATEST_PRICE + "?symbol=" + list;
+        }
+
         public string GetPrice(string symbol, string currency)
         {
             return Constants.GET_AVG_PRICE + "?symbol=" + symbol + currency;
@@ -27,7 +37,7 @@ namespace DogeHODLTrader
         {
             long datetime = DateTimeOffset.Now.ToUnixTimeMilliseconds();
             string query = "timestamp=" + datetime.ToString();
-            string hashedKey = GenerateHash(Constants.SECRET_KEY, query);
+            string hashedKey = GenerateHash("XXX", query);
 
             return Constants.GET_ACCOUNT_INFORMATION + "?" + query + "&signature=" + hashedKey;
         }
