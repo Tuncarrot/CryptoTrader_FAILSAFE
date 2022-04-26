@@ -10,11 +10,11 @@ namespace DogeHODLTrader
         private string name;
         private double price;
         private string currency;
+        private double OneDayChange;
         
-        public Coin(string name, string currency)
+        public Coin(string name)
         {
             this.name = name;
-            this.currency = currency;
         }
 
         public string GetName()
@@ -27,7 +27,7 @@ namespace DogeHODLTrader
         }
         public double GetPrice()
         {
-            return price;
+            return Math.Round(price, 2);
         }
         public void SetPrice(double price)
         {
@@ -40,6 +40,16 @@ namespace DogeHODLTrader
         public void SetCurrency(string currency)
         {
             this.currency = currency;
+        }
+
+        public void SetChange(double change)
+        {
+            this.OneDayChange = change;
+        }
+
+        public double GetChange()
+        {
+            return Math.Round(OneDayChange, 2);
         }
     }
 }

@@ -32,12 +32,18 @@ namespace DogeHODLTrader
         // Binance Account Types
         public static readonly string SPOT = "SPOT";
 
+        // CoinMarketCap REST API Calls
+        public static readonly string LATEST_PRICE = "/v2/cryptocurrency/quotes/latest";
+
         // Crypto Currencies
         public static readonly string BTC = "BTC";
         public static readonly string USD = "USDT";
 
         // Data Extraction Constants
         public static readonly int NUM_OF_FIELDS = 2;
+
+        // Web Codes
+        public static readonly int SERVER_OK = 200;
 
     }
 }

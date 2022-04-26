@@ -8,14 +8,13 @@ namespace DogeHODLTrader
 
     public class FileIO
     {
-        private const string fileName = @"C:\Users\Home Computer\Desktop\CRYPTO_COINS_ALLOWED.txt";
 
         public FileIO()
         {
 
         }
 
-        public string[] ReadFromFile()
+        public string[] ReadFromFile(string fileName)
         {
             string[] symbols = { };
 

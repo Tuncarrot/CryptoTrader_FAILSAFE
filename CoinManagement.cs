@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Newtonsoft.Json;
 using System.Text;
 
 namespace DogeHODLTrader
@@ -19,19 +20,39 @@ namespace DogeHODLTrader
             return Convert.ToDouble(format);
         }
         
-        public Dictionary<string, string> ParseResponse(string[] allowedCoins)
+        public string GetListCoins(Coin[] symbols)
         {
-            Dictionary<string, string> coinData = new Dictionary<string, string>();
-            
-            for (int i=0;i<allowedCoins.Length;i++)
-            {
-                string data = allowedCoins[i];
-                string[] coinExtract = data.Split(",");
+            string list = "";
 
-                coinData.Add(coinExtract[0], coinExtract[1]);
+            for (int i=0;i<symbols.Length;i++)
+            {
+                list += symbols[i].GetName();
+
+                if (i != symbols.Length-1)
+                {
+                    list += ",";
+                }
             }
 
-            return coinData;
+            return list;
+        }
+
+        public void ParseResponse(dynamic JSONResponse, Coin[] Symbols)
+        {
+            for (int i=0;i<Symbols.Length;i++)
+            {
+                string jsonPriceData        = "data." + Symbols[i].GetName() + "[0].quote.USD.price";
+                string jsonPricePercent24h  = "data." + Symbols[i].GetName() + "[0].quote.USD.percent_change_24h";
+
+                string crypto_price = JSONResponse.SelectToken(jsonPriceData);
+                string crypto_24h_change_price = JSONResponse.SelectToken(jsonPricePercent24h);
+
+                crypto_price.Trim(new Char[] { '{', '}' });
+                crypto_24h_change_price.Trim(new Char[] { '{', '}' });
+
+                Symbols[i].SetPrice(Convert.ToDouble(crypto_price));
+                Symbols[i].SetChange(Convert.ToDouble(crypto_24h_change_price));
+            }
         }
     }
 }
