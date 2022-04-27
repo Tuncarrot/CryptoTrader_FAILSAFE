@@ -8,6 +8,7 @@ namespace DogeHODLTrader
     {
         static public void PrintTitle()
         {
+            Console.ForegroundColor = ConsoleColor.Cyan;
             Console.WriteLine("\n");
             Console.WriteLine("\t /$$$$$$$$       /$$ /$$  /$$$$$$   /$$$$$$  /$$$$$$$$ /$$$$$$$$");
             Console.WriteLine("\t| $$_____/      |__/| $$ /$$__  $$ /$$__  $$| $$_____/| $$_____/");
@@ -17,7 +18,25 @@ namespace DogeHODLTrader
             Console.WriteLine("\t| $$   /$$__  $$| $$| $$ /$$  \\ $$| $$  | $$| $$      | $$      ");
             Console.WriteLine("\t| $$  |  $$$$$$$| $$| $$|  $$$$$$/| $$  | $$| $$      | $$$$$$$$");
             Console.WriteLine("\t|__/   \\_______/|__/|__/ \\______/ |__/  |__/|__/      |________/");
-            Console.WriteLine("\t\n");
+            Console.ForegroundColor = ConsoleColor.White;
+        }
+
+        static public void PrintServerStatus(bool status)
+        {
+            Console.Write("\n\t SERVER STATUS : ");
+            if (status)
+            {
+                Console.ForegroundColor = ConsoleColor.Green;
+                Console.Write("ONLINE");
+            }
+            else
+            {
+                Console.ForegroundColor = ConsoleColor.Red;
+                Console.Write("OFFLINE");
+            }
+
+            Console.ForegroundColor = ConsoleColor.White;
+            Console.WriteLine("\n");
         }
     }
 }

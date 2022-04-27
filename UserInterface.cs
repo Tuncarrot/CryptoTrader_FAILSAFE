@@ -7,14 +7,11 @@ namespace DogeHODLTrader
     public class UserInterface
     {
 
-        private int menuTicker;
-        private int menuTracker;
+        private bool programActive;
 
         public UserInterface()
         {
-            menuTicker = Constants.FIRST_OPTION;
-            menuTracker = Constants.MAIN_MENU;
-
+            programActive = false;
             Console.CursorVisible = false;
         }
 
@@ -24,48 +21,51 @@ namespace DogeHODLTrader
         }
         public void ProcessInput(int selection)
         {
-            if (selection != Constants.OPTION_ENTER)
+            if (selection == Constants.OPTION_ENTER)
             {
-                menuTicker += selection;
-
-                if (menuTicker > Constants.MAIN_MENU_OPTIONS.Length)
-                {
-                    menuTicker--;
-                }
-                else if (menuTicker < Constants.FIRST_OPTION)
-                {
-                    menuTicker++;
-                }
-            }
-            else
-            {
-                // User Pressed Enter, Load next screen
+                programActive = !programActive;
             }
         }
 
-        public void UpdateScreen(Coin[] coins)
+        public void UpdateScreen(Coin[] coins, bool status)
         {
             Console.Clear();
             Visuals.PrintTitle();
+            Visuals.PrintServerStatus(status);
 
-            for (int i = 0; i < Constants.MAIN_MENU_OPTIONS.Length; i++)
+            Console.Write("\t");
+            if (programActive)
             {
-                if (i == menuTicker)
-                {
-                    Console.Write("\t\t-> ");
-                }
-                else
-                {
-                    Console.Write("    \t\t");
-                }
-                Console.WriteLine(Constants.MAIN_MENU_OPTIONS[i]);
+                Console.BackgroundColor = ConsoleColor.DarkGreen;
+                Console.Write(" ~ PROGRAM ACTIVE ~ ");
             }
-            Console.Write("\n\n\n\n\t\tCoin  Cost (USD)\n");
-            Console.Write("\t\t-----------------------\n");
+            else
+            {
+                Console.BackgroundColor = ConsoleColor.DarkRed;
+                Console.Write(" ~ NOT ACTIVE ~ ");
+            }
+            Console.BackgroundColor = ConsoleColor.Black;
+
+            Console.Write("\n\n\tCoin\tCost (USD)\tChange % (24h)\n");
+            Console.Write("\t-----------------------------------\n");
             for (int j = 0; j < coins.Length; j++)
             {
                 if (coins[j] == null) break;
-                Console.WriteLine("\t\t" + coins[j].GetName() + " -> " + coins[j].GetPrice() + " [" + coins[j].GetCurrency() + "]");
+                Console.Write("\n\t" + coins[j].GetName() + "\t" + coins[j].GetPrice() + "\t\t[");
+                
+                if (coins[j].GetChange() > 0)
+                {
+                    Console.ForegroundColor = ConsoleColor.Green;
+                }
+                else
+                {
+                    Console.ForegroundColor = ConsoleColor.Red;
+                }
+
+                Console.Write(coins[j].GetChange());
+                Console.ForegroundColor = ConsoleColor.White;
+                Console.Write("]");
+
             }
         }
     }
